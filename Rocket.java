@@ -21,6 +21,8 @@ public class Rocket extends Mover
     private GreenfootImage rocketWithThrust = new GreenfootImage("rocketWithThrust.png");
     private GreenfootImage rocketWithThrustLaser = new GreenfootImage("rocketWithThrustLaser.png");
     private boolean hasSpecialEffect = false;
+    private Laser laser = null;
+    
 
     /**
      * Initialisiert diese Rakete.
@@ -42,6 +44,7 @@ public class Rocket extends Mover
         move();
         checkKeys();
         checkCollisionRange();
+        moveLaser();
     }
 
     
@@ -126,5 +129,18 @@ public class Rocket extends Mover
              //   break;
         }
     }
-
+    
+    public void attachLaser(){
+        laser = new Laser();
+        getWorld().addObject(laser, getX(), getY());
+        laser.setRotation(getRotation());
+        
+    }
+    
+    private void moveLaser() {
+        if (laser != null) {
+            laser.setLocation(getX(), getY());
+            laser.setRotation(getRotation());
+        }
+    }
 }
