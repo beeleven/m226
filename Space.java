@@ -1,4 +1,5 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage und Greenfoot)
+import java.util.*;
 
 
 /**
@@ -9,6 +10,11 @@ import greenfoot.*;  // (World, Actor, GreenfootImage und Greenfoot)
  */
 public class Space extends World
 {
+    private int SpawnTimer = 0;
+    private static final int SPAWN_INTERVAL = 15 * 60;
+    private Random random = new Random();
+    
+    
     /**
      * Erzeugt die Weltraum-Welt mit schwarzem Hintergrund und Sternen.
      */
@@ -22,6 +28,12 @@ public class Space extends World
         Explosion.initialiseImages();
         createRockets();
     }
+    
+    public void act(){
+        
+    }
+    
+    
     
     /**
      * Erzeugt einige zufällige Sterne in der Welt.
@@ -43,6 +55,10 @@ public class Space extends World
         
         Rocket2 player2Rocket = new Rocket2();
         addObject(player2Rocket, 800 - 20, getHeight() / 2);
+        
+    }
+    
+    private void spawnItem(){
         
     }
 }
