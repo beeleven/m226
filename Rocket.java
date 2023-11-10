@@ -19,6 +19,10 @@ public class Rocket extends Mover
     
     public GreenfootImage rocket = new GreenfootImage("rocket.png");
     private GreenfootImage rocketWithThrust = new GreenfootImage("rocketWithThrust.png");
+    private GreenfootImage rocketWithThrustLaser = new GreenfootImage("rocketWithThrustLaser.png");
+    private boolean hasSpecialEffect = false;
+    private Laser laser = null;
+    
 
     /**
      * Initialisiert diese Rakete.
@@ -40,6 +44,7 @@ public class Rocket extends Mover
         move();
         checkKeys();
         checkCollisionRange();
+        moveLaser();
     }
 
     
@@ -91,27 +96,51 @@ public class Rocket extends Mover
      * Soll die Rakete gezündet werden?
      */
     private void ignite(boolean boosterOn) 
-    {
+    {   
+        long currentTime = System.currentTimeMillis();
+        
         if (boosterOn) {
-            setImage(rocketWithThrust);
+            
+            if (hasSpecialEffect){
+                setImage(rocketWithThrustLaser);
+            } else {
+                setImage(rocketWithThrust);
+            }
+            
             acceleration.setDirection(getRotation());
             increaseSpeed(acceleration);
         }
-        else {
-            setImage(rocket);        
+        else if(!hasSpecialEffect) {
+            setImage(rocket);
         }
+
     }
     
     public void applyEffect(int effect){
         switch (effect) {
             case 1:
-                setImage("rocketTwo.png");
+                setImage(rocketWithThrustLaser);
+                hasSpecialEffect = false;
                 break;
                 
-            case 2:
-                setImage("rocketTwo.png");
-                break;
+            //case 2:
+             //   setImage("rocketTwo.png");
+             //   hasSpecialEffect = true;
+             //   break;
         }
     }
-
+    
+    public void attachLaser(){
+        laser = new Laser();
+        getWorld().addObject(laser, getX(), getY());
+        laser.setRotation(getRotation());
+        
+    }
+    
+    private void moveLaser() {
+        if (laser != null) {
+            laser.setLocation(getX(), getY());
+            laser.setRotation(getRotation());
+        }
+    }
 }
