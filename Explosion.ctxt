@@ -1,0 +1,13 @@
+#BlueJ class context
+comment0.target=Explosion
+comment0.text=\r\n\ Eine\ Explosion.\ Sie\ dehnt\ sich\ zuerst\ aus\ und\ f\u00E4llt\ dann\ in\ sich\ zusammen.\ \r\n\ Die\ Explosion\ zerst\u00F6rt\ andere\ Objekte,\ die\ von\ der\ Explosion\ getroffen\ werden.\r\n\ \r\n\ @author\ Poul\ Henriksen\r\n\ @author\ Michael\ K\u00F6lling\r\n\ @version\ 1.1\r\n
+comment1.params=
+comment1.target=Explosion()
+comment1.text=\r\n\ Erzeugt\ eine\ Explosion.\r\n
+comment2.params=
+comment2.target=void\ initialiseImages()
+comment2.text=\ \r\n\ Erzeugt\ die\ Bilder\ f\u00FCr\ die\ Explosion.\r\n
+comment3.params=
+comment3.target=void\ act()
+comment3.text=\r\n\ EXPLOSION\!\r\n
+numComments=4

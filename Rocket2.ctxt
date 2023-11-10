@@ -1,0 +1,22 @@
+#BlueJ class context
+comment0.target=Rocket2
+comment0.text=\r\n\ Eine\ Rakete,\ die\ mit\ den\ Pfeiltasten\ gesteuert\ werden\ kann\:\ hoch,\ runter,\ links,\ rechts.\ \r\n\ Durch\ Dr\u00FCcken\ der\ Leerzeichentaste\ wird\ ein\ Schuss\ abgefeuert.\ \r\n\ \r\n\ @author\ Poul\ Henriksen\r\n\ @author\ Michael\ K\u00F6lling\r\n\ @author\ KEL\r\n\ \r\n\ @version\ 2.0\r\n\ @version\ 2.1\r\n\ Parameter\ ver\u00E4ndern\r\n
+comment1.params=
+comment1.target=Rocket2()
+comment1.text=\r\n\ Initialisiert\ diese\ Rakete.\r\n\ KEL\ \r\n
+comment2.params=
+comment2.target=void\ act()
+comment2.text=\r\n\ Tut,\ was\ eien\ Rakete\ so\ macht.\ (Das\ hei\u00DFt\:\ meistens\ herumfliegen\ und\ wenden,\r\n\ beschleunigen\ und\ schie\u00DFen,\ wenn\ die\ entsprechenden\ Tasten\ gedr\u00FCckt\ werden.)\r\n
+comment3.params=
+comment3.target=void\ checkCollision()
+comment3.text=\r\n\ Pr\u00FCft,\ ob\ wir\ mit\ einem\ Asteroiden\ kollidieren.\r\n
+comment4.params=
+comment4.target=void\ checkCollisionRange()
+comment4.text=\r\n\ Pr\u00FCft,\ ob\ wir\ mit\ einem\ Asteroiden\ innerhlab\ des\ Bereichs\ kollidieren.\r\n
+comment5.params=
+comment5.target=void\ checkKeys()
+comment5.text=\r\n\ Pr\u00FCft,\ ob\ irgendeine\ Taste\ gedr\u00FCckt\ wurde,\ und\ reagiert\ darauf.\r\n
+comment6.params=boosterOn
+comment6.target=void\ ignite(boolean)
+comment6.text=\r\n\ Soll\ die\ Rakete\ gez\u00FCndet\ werden?\r\n
+numComments=7
