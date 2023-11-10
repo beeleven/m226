@@ -19,4 +19,6 @@ comment5.text=\r\n\ Pr\u00FCft,\ ob\ irgendeine\ Taste\ gedr\u00FCckt\ wurde,\ u
 comment6.params=boosterOn
 comment6.target=void\ ignite(boolean)
 comment6.text=\r\n\ Soll\ die\ Rakete\ gez\u00FCndet\ werden?\r\n
-numComments=7
+comment7.params=effect
+comment7.target=void\ applyEffect(int)
+numComments=8

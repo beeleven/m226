@@ -103,5 +103,17 @@ public class Rocket2 extends Mover
             setImage(rocketTwo);        
         }
     }
+    
+     public void applyEffect(int effect){
+        switch (effect) {
+            case 1:
+                setImage("rocket.png");
+                break;  
+                
+            case 2:
+                setImage("rocket.png");
+                break;
+        }
+    }
 
 }
