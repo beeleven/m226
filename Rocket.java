@@ -60,6 +60,9 @@ public class Rocket extends Mover
         
         move();
         checkKeys();
+        if (hasSpecialEffect) {
+            checkCollisionWithEnemy();
+        }
         //checkCollisionRange();
         //moveLaser();
     }
@@ -161,16 +164,22 @@ public class Rocket extends Mover
         }
     }
     
+    
     private void checkCollisionWithEnemy()
     {
-        List<Rocket2> enemyList = getObjectsAtOffset(0, 0, Rocket2.class);
+        Rocket2 enemyRocket = (Rocket2) getOneIntersectingObject(Rocket2.class);
         
-        if (!enemyList.isEmpty()) {
-            Rocket2 enemy = enemyList.get(0);
-            getWorld().removeObject(enemy);
+        if (enemyRocket !=null) {
+            getWorld().removeObject(enemyRocket);
+        }
+        //List<Rocket2> enemyList = getObjectsAtOffset(0, 0, Rocket2.class);
+        
+        //if (!enemyList.isEmpty()) {
+            //Rocket2 enemy = enemyList.get(0);
+            //getWorld().removeObject(enemy);
         }
     }
-}
+
 
 
     /**
