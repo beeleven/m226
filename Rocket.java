@@ -20,8 +20,16 @@ public class Rocket extends Mover
     public GreenfootImage rocket = new GreenfootImage("rocket.png");
     private GreenfootImage rocketWithThrust = new GreenfootImage("rocketWithThrust.png");
     private GreenfootImage rocketWithThrustLaser = new GreenfootImage("rocketWithThrustLaser.png");
+    private GreenfootImage rocketWithLaser = new GreenfootImage("rocketWithLaser.png");
+    private GreenfootImage rocketWithThrustPflug = new GreenfootImage("rocketWithThrustPflug.png");
+    private GreenfootImage rocketWithPflug = new GreenfootImage("rocketWithPflug.png");
+    
+    
+    private GreenfootImage currentImageNoThrust = rocket;
+    private GreenfootImage currentImageWithThrust;
     private boolean hasSpecialEffect = false;
     private Laser laser = null;
+
     
 
     /**
@@ -102,35 +110,43 @@ public class Rocket extends Mover
      * Soll die Rakete gezündet werden?
      */
     private void ignite(boolean boosterOn) 
-    {   
-        long currentTime = System.currentTimeMillis();
+    {        
         
         if (boosterOn) {
-            
-            if (hasSpecialEffect){
-                setImage(rocketWithThrustLaser);
-            } else {
-                setImage(rocketWithThrust);
-            }
+            setImage(rocketWithThrust);
             
             acceleration.setDirection(getRotation());
             increaseSpeed(acceleration);
+            
+            if(hasSpecialEffect){
+                setImage(currentImageWithThrust);
+            }
+            
         }
+        else{
+            setImage(currentImageNoThrust); 
+        }
+        
+        /**
         else if(!hasSpecialEffect) {
             setImage(rocket);
         }
+        
+        **/
 
     }
     
     public void applyEffect(int effect){
         switch (effect) {
             case 1:
-                setImage(rocketWithThrust);
-                hasSpecialEffect = false;
+                currentImageWithThrust = (rocketWithThrustLaser);
+                currentImageNoThrust = (rocketWithLaser);
+                hasSpecialEffect = true;
                 break;
                 
             case 2:
-                setImage(rocketWithThrustLaser);
+                currentImageWithThrust = (rocketWithThrustPflug);
+                currentImageNoThrust = (rocketWithPflug);
                 hasSpecialEffect = true;
                 checkCollisionWithEnemyRocket();
                 break;
