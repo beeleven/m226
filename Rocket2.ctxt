@@ -21,4 +21,6 @@ comment6.target=void\ ignite(boolean)
 comment6.text=\r\n\ Soll\ die\ Rakete\ gez\u00FCndet\ werden?\r\n
 comment7.params=effect
 comment7.target=void\ applyEffect(int)
-numComments=8
+comment8.params=
+comment8.target=boolean\ hasShield()
+numComments=9

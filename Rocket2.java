@@ -19,6 +19,7 @@ public class Rocket2 extends Mover
     
     private GreenfootImage rocketTwo = new GreenfootImage("rocketTwo.png");
     private GreenfootImage rocketTwoWithThrust = new GreenfootImage("rocketTwoWithThrust.png");
+    private boolean hasShield = false;
 
     /**
      * Initialisiert diese Rakete.
@@ -119,6 +120,11 @@ public class Rocket2 extends Mover
                 setImage("rocket.png");
                 break;
         }
+    }
+    
+    public boolean hasShield(){
+        hasShield = true;
+        return hasShield;
     }
     
 

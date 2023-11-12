@@ -60,7 +60,7 @@ public class Rocket extends Mover
         
         move();
         checkKeys();
-        if (hasSpecialEffect) {
+        if (currentImageWithThrust == rocketWithThrustPflug || currentImageNoThrust == rocketWithPflug) {
             checkCollisionWithEnemy();
         }
         //checkCollisionRange();
@@ -169,35 +169,16 @@ public class Rocket extends Mover
     {
         Rocket2 enemyRocket = (Rocket2) getOneIntersectingObject(Rocket2.class);
         
-        if (enemyRocket !=null) {
+        if(enemyRocket != null){
+            if(enemyRocket.hasShield()){
+                return;
+            }
+        }
+        
+        else {
             getWorld().removeObject(enemyRocket);
         }
-        //List<Rocket2> enemyList = getObjectsAtOffset(0, 0, Rocket2.class);
-        
-        //if (!enemyList.isEmpty()) {
-            //Rocket2 enemy = enemyList.get(0);
-            //getWorld().removeObject(enemy);
-        }
     }
-
-
-
-    /**
-    public void attachLaser(){
-        laser = new Laser();
-        getWorld().addObject(laser, getX(), getY());
-        laser.setRotation(getRotation());
-        
-    }
-    
-    private void moveLaser() {
-        if (laser != null) {
-            laser.setLocation(getX(), getY());
-            laser.setRotation(getRotation());
-        }
-    }
-    **/
-    
-   
+}
     
 
