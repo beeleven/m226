@@ -31,6 +31,7 @@ public class Rocket extends Mover
     private GreenfootImage currentImageWithThrust;
     private boolean hasSpecialEffect = false;
     private Laser laser = null;
+    private boolean hasShield = false;
 
     
 
@@ -155,6 +156,7 @@ public class Rocket extends Mover
                 currentImageWithThrust = (rocketWithThrustShield);
                 currentImageNoThrust = (rocketWithShield);
                 hasSpecialEffect = true;
+                hasShield = true;
                 break;
         }
     }
