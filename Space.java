@@ -33,6 +33,7 @@ public class Space extends World
         Explosion.initialiseImages();
         createRockets();
         updateScore();
+        spawnItemInCenter();
     }
     
     public void act(){
@@ -44,10 +45,10 @@ public class Space extends World
                 countdownActive = false;  // Countdown is done, allow user interaction
                 // Additional setup or game logic after countdown
                 showText("", getWidth() / 2, getHeight() / 2);
-                spawnItemInCenter();
-                checkScore();
             }
         } else {
+            checkitem();
+            checkScore();
             // Game logic when the countdown is done
             // Other game logic...
         }
@@ -74,13 +75,14 @@ public class Space extends World
         addObject(player1Rocket, 20, getHeight() / 2);
         
         Rocket2 player2Rocket = new Rocket2();
+<<<<<<< HEAD
+        //addObject(player2Rocket, 800 - 20, getHeight() / 2);
+=======
         addObject(player2Rocket, 800 - 20, getHeight() / 2);
+>>>>>>> 78a23be561f51b0083a7b0a2fda278b1dc57f9d3
         
     }
     
-    private void spawnItem(){
-        
-    }
     
     private void showCountdown() {
         showText("Countdown: " + countdown / 60, getWidth() / 2, getHeight() / 2);
@@ -100,20 +102,41 @@ public class Space extends World
         List<Rocket> player1List = getObjects(Rocket.class);
         List<Rocket2> player2List = getObjects(Rocket2.class);
         
-    if (player1List.size() == 1) {
-        player1Score++;
+    if (player1List.size() == 0) {
+        player2Score++;
+        Rocket player1Rocket = new Rocket ();
+        addObject(player1Rocket, 20, getHeight() / 2);
         updateScore();
     }
 
-    if (player2List.size() == 1) {
-        player2Score++;
+    if (player2List.size() == 0) {
+        player1Score++;
+        Rocket2 player2Rocket = new Rocket2();
+        addObject(player2Rocket, 800 - 20, getHeight() / 2);
         updateScore();
     }
+    
+    
 }
-        
+
     private void updateScore() {
         showText("Player 1 Score: " + player1Score, 100, 20);
         showText("Player 2 Score: " + player2Score, getWidth() - 100, 20);
     }
-
+    
+    public void checkitem () {
+         List<Item> itemList = getObjects(Item.class);
+    //überprüfen ob item aufgenommen wurde
+    if (itemList.size() == 0 ) {
+        spawnItemInRandomPosition();
+    }
+    }
+    
+    
+    private void spawnItemInRandomPosition(){
+        Item item = new Item();
+        int x = Greenfoot.getRandomNumber(getWidth());
+        int y = Greenfoot.getRandomNumber(getHeight());
+        addObject(item, x, y);
+    }
 }
