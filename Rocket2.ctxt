@@ -23,4 +23,6 @@ comment7.params=effect
 comment7.target=void\ applyEffect(int)
 comment8.params=
 comment8.target=boolean\ hasShield()
-numComments=9
+comment9.params=rocket
+comment9.target=void\ createLaser(greenfoot.Actor)
+numComments=10

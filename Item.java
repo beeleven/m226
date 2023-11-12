@@ -37,7 +37,8 @@ public class Item extends Actor
     public void checkCollision() {
         if (isTouching(Rocket.class) || isTouching(Rocket2.class)){
             
-            randomEffect = generateRandomNumber();
+            //randomEffect = generateRandomNumber();
+            randomEffect = 1;
             
             applyEffectToRocket(randomEffect);
             

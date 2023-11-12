@@ -113,8 +113,8 @@ public class Rocket2 extends Mover
      public void applyEffect(int effect){
         switch (effect) {
             case 1:
-                setImage("rocket.png");
-                break;  
+                createLaser(this);
+                break; 
                 
             case 2:
                 setImage("rocket.png");
@@ -125,6 +125,16 @@ public class Rocket2 extends Mover
     public boolean hasShield(){
         return hasShield;
     }
+    Laser laser;
+    private void createLaser(Actor rocket) {
+    // Create a new Laser instance in front of the rocket
+    double x = rocket.getX() + Math.cos(Math.toRadians(rocket.getRotation())) * rocket.getImage().getWidth() / 2;
+    double y = rocket.getY() + Math.sin(Math.toRadians(rocket.getRotation())) * rocket.getImage().getHeight() / 2;
+    laser = new Laser(rocket); // Pass the rocket reference to the Laser constructor
+    getWorld().addObject(laser, (int) x, (int) y);
+    laser.setRotation(rocket.getRotation());
+}
+
     
 
 }

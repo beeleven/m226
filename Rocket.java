@@ -130,7 +130,7 @@ public class Rocket extends Mover
                 currentImageNoThrust = (rocketWithLaser);
                 hasSpecialEffect = true;
                 effectTimer = EFFECT_DURATION;
-                createLaser();
+                createLaser(this);
                 break;
                 
             case 2:
@@ -200,14 +200,16 @@ public class Rocket extends Mover
     }
 }
 
-private void createLaser() {
-        // Create a new Laser instance in front of the rocket
-        double x = getX() + Math.cos(Math.toRadians(getRotation())) * getImage().getWidth() / 2;
-        double y = getY() + Math.sin(Math.toRadians(getRotation())) * getImage().getHeight() / 2;
-        laser = new Laser();
-        getWorld().addObject(laser, (int) x, (int) y);
-        laser.setRotation(getRotation());
-    }
+private void createLaser(Actor rocket) {
+    // Create a new Laser instance in front of the rocket
+    double x = rocket.getX() + Math.cos(Math.toRadians(rocket.getRotation())) * rocket.getImage().getWidth() / 2;
+    double y = rocket.getY() + Math.sin(Math.toRadians(rocket.getRotation())) * rocket.getImage().getHeight() / 2;
+    laser = new Laser(rocket); // Pass the rocket reference to the Laser constructor
+    getWorld().addObject(laser, (int) x, (int) y);
+    laser.setRotation(rocket.getRotation());
+}
+
+
 
 }
     
