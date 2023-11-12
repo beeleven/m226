@@ -37,8 +37,8 @@ public class Item extends Actor
     public void checkCollision() {
         if (isTouching(Rocket.class) || isTouching(Rocket2.class)){
             
-            //randomEffect = generateRandomNumber();
-            randomEffect = 1;
+            randomEffect = generateRandomNumber();
+            
             
             applyEffectToRocket(randomEffect);
             
@@ -50,10 +50,7 @@ public class Item extends Actor
         if (isTouching(Rocket.class)) {
             Rocket rocket = (Rocket) getOneIntersectingObject(Rocket.class);
             rocket.applyEffect(effect);
-            if (effect == 1) {
-                // Attach the laser when the laser effect is acquired
-                //rocket.attachLaser();
-            }
+
         } else if (isTouching(Rocket2.class)) {
             Rocket2 rocket2 = (Rocket2) getOneIntersectingObject(Rocket2.class);
             rocket2.applyEffect(effect);

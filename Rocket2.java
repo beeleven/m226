@@ -17,10 +17,23 @@ public class Rocket2 extends Mover
 {
     private Vector acceleration;            // Geschwindigkeit der Rakete bei eingeschaltetem Turbo.
     
-    private GreenfootImage rocketTwo = new GreenfootImage("rocketTwo.png");
+    public GreenfootImage rocketTwo = new GreenfootImage("rocketTwo.png");
     private GreenfootImage rocketTwoWithThrust = new GreenfootImage("rocketTwoWithThrust.png");
-    private boolean hasShield = false;
-
+    private GreenfootImage rocketTwoWithThrustLaser = new GreenfootImage("rocketTwoWithThrustLaser.png");
+    private GreenfootImage rocketTwoWithLaser = new GreenfootImage("rocketTwoWithLaser.png");
+    private GreenfootImage rocketTwoWithThrustPflug = new GreenfootImage("rocketTwoWithThrustPflug.png");
+    private GreenfootImage rocketTwoWithPflug = new GreenfootImage("rocketTwoWithPflug.png");
+    private GreenfootImage rocketTwoWithShield = new GreenfootImage("rocketTwoWithShield.png");
+    private GreenfootImage rocketTwoWithThrustShield = new GreenfootImage("rocketTwoWithThrustShield.png");
+    
+    
+    private GreenfootImage currentImageNoThrust = rocketTwo;
+    private GreenfootImage currentImageWithThrust;
+    private boolean hasSpecialEffect = false;
+    private Laser laser = null;
+    private boolean shieldActive = false;
+    private int effectTimer = 0;
+    private static final int EFFECT_DURATION = 2 * 60;  // 7 seconds at 60 frames per second
     /**
      * Initialisiert diese Rakete.
      * KEL 
@@ -40,6 +53,7 @@ public class Rocket2 extends Mover
      */
     public void act()
     {
+        // Check if the countdown is still active in the Space class
         if (((Space) getWorld()).isCountdownActive()) {
             // If countdown is active, don't process rocket control
             return;
@@ -47,36 +61,19 @@ public class Rocket2 extends Mover
         
         move();
         checkKeys();
-        checkCollisionRange();
-    }
-
-    
-    /**
-     * Prüft, ob wir mit einem Asteroiden kollidieren.
-     */
-    private void checkCollision() 
-    {
-        Asteroid a = (Asteroid) getOneIntersectingObject(Asteroid.class);
-        if (a != null) {
-            getWorld().addObject(new Explosion(), getX(), getY());
-            getWorld().removeObject(this);
+        if (currentImageWithThrust == rocketTwoWithThrustPflug || currentImageNoThrust == rocketTwoWithPflug) {
+            checkCollisionWithEnemy();
         }
-    }
-    
-    /**
-     * Prüft, ob wir mit einem Asteroiden innerhlab des Bereichs kollidieren.
-     */
-    private void checkCollisionRange() 
-    {   
-        int range = getImage().getWidth(); //Set radius of the Range
         
-        List<Asteroid> asteroids = getObjectsInRange(range, Asteroid.class);
-        for (Asteroid a : asteroids) {
-            if (a != null) {
-                getWorld().addObject(new Explosion(), getX(), getY());
-                getWorld().removeObject(this);
+        if (effectTimer > 0) {
+            effectTimer--;
+            if (effectTimer == 0) {
+                // Effect duration expired, reset the effect
+                resetSpecialEffect();
             }
         }
+        
+    
     }
     
     /**
@@ -99,41 +96,111 @@ public class Rocket2 extends Mover
      * Soll die Rakete gezündet werden?
      */
     private void ignite(boolean boosterOn) 
-    {
+    {        
+        
         if (boosterOn) {
             setImage(rocketTwoWithThrust);
+            
             acceleration.setDirection(getRotation());
             increaseSpeed(acceleration);
+            
+            if(hasSpecialEffect){
+                setImage(currentImageWithThrust);
+            }
+            
         }
-        else {
-            setImage(rocketTwo);        
+        else{
+            if(hasSpecialEffect){
+                setImage(currentImageNoThrust); 
+            }
+            else{
+                setImage(rocketTwo);
+            }
+            
         }
     }
     
      public void applyEffect(int effect){
         switch (effect) {
             case 1:
+                currentImageWithThrust = (rocketTwoWithThrust);
+                currentImageNoThrust = (rocketTwo);
+                hasSpecialEffect = true;
+                effectTimer = EFFECT_DURATION;
                 createLaser(this);
-                break; 
+                break;
                 
             case 2:
-                setImage("rocket.png");
+                currentImageWithThrust = (rocketTwoWithThrustPflug);
+                currentImageNoThrust = (rocketTwoWithPflug);
+                hasSpecialEffect = true;
+                effectTimer = EFFECT_DURATION;
+                checkCollisionWithEnemy();
+                break;
+                
+            case 3:
+                currentImageWithThrust = (rocketTwoWithThrustShield);
+                currentImageNoThrust = (rocketTwoWithShield);
+                hasSpecialEffect = true;
+                effectTimer = EFFECT_DURATION;
+                shieldActive = true;
+                break;
+                
+            case 4:
+                currentImageWithThrust = (rocketTwoWithThrust);
+                currentImageNoThrust = (rocketTwo);
+                hasSpecialEffect = true;
+                effectTimer = EFFECT_DURATION;
+                spawnAsteroids();
                 break;
         }
     }
     
-    public boolean hasShield(){
-        return hasShield;
-    }
-    Laser laser;
-    private void createLaser(Actor rocket) {
-    // Create a new Laser instance in front of the rocket
-    double x = rocket.getX() + Math.cos(Math.toRadians(rocket.getRotation())) * rocket.getImage().getWidth() / 2;
-    double y = rocket.getY() + Math.sin(Math.toRadians(rocket.getRotation())) * rocket.getImage().getHeight() / 2;
-    laser = new Laser(rocket); // Pass the rocket reference to the Laser constructor
+    private void createLaser(Actor rocketTwo) {
+    // Create a new Laser instance in front of the rocketTwo
+    double x = rocketTwo.getX() + Math.cos(Math.toRadians(rocketTwo.getRotation())) * rocketTwo.getImage().getWidth() / 2;
+    double y = rocketTwo.getY() + Math.sin(Math.toRadians(rocketTwo.getRotation())) * rocketTwo.getImage().getHeight() / 2;
+    laser = new Laser(rocketTwo); // Pass the rocketTwo reference to the Laser constructor
     getWorld().addObject(laser, (int) x, (int) y);
-    laser.setRotation(rocket.getRotation());
-}
+    laser.setRotation(rocketTwo.getRotation());
+    }
+
+    private void checkCollisionWithEnemy()
+        {
+            Rocket enemyRocket = (Rocket) getOneIntersectingObject(Rocket.class);
+            
+            if(enemyRocket != null){
+                if (enemyRocket.hasShield()){
+                    return;
+                }
+                else {
+                getWorld().removeObject(enemyRocket);
+                }
+            }
+            
+            
+        }
+    
+    public boolean hasShield(){
+        return shieldActive;
+    }
+    
+     private void spawnAsteroids() {
+    for (int i = 0; i < 3; i++) {
+        int size = Greenfoot.getRandomNumber(64) + 32; // Random size between 32 and 95
+        Vector speed = new Vector(Greenfoot.getRandomNumber(360), 2);
+        Asteroid asteroid = new Asteroid();
+        getWorld().addObject(asteroid, Greenfoot.getRandomNumber(getWorld().getWidth()), Greenfoot.getRandomNumber(getWorld().getHeight()));
+    }
+    }
+
+  private void resetSpecialEffect() {
+        hasSpecialEffect = false;
+        shieldActive = false;
+        currentImageNoThrust = rocketTwo;
+        currentImageWithThrust = rocketTwoWithThrust;
+        laser = null;
+    }
 
     
 

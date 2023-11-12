@@ -176,7 +176,7 @@ public class Rocket extends Mover
         
     }
     
-    private boolean hasShield(){
+    public boolean hasShield(){
         return shieldActive;
     }
     
@@ -189,9 +189,6 @@ public class Rocket extends Mover
     }
     
     private void spawnAsteroids() {
-    // Add code here to spawn asteroids when case 4 is activated
-    // You can customize the size, speed, and position of the asteroids
-    // Example:
     for (int i = 0; i < 3; i++) {
         int size = Greenfoot.getRandomNumber(64) + 32; // Random size between 32 and 95
         Vector speed = new Vector(Greenfoot.getRandomNumber(360), 2);

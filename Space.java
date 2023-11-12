@@ -13,7 +13,6 @@ public class Space extends World
     private int SpawnTimer = 0;
     private static final int SPAWN_INTERVAL = 15 * 60;
     private Random random = new Random();
-    // Add a variable for countdown time
     private int countdown = 300;  // 300 frames, assuming 60 frames per second
     private boolean countdownActive = true;  // Indicates whether the countdown is active
     private int player1Score = 0;
@@ -54,8 +53,6 @@ public class Space extends World
         } else {
             checkitem();
             checkScore();
-            // Game logic when the countdown is done
-            // Other game logic...
             
              itemSpawnTimer++;
             if (itemSpawnTimer >= ITEM_SPAWN_INTERVAL) {
@@ -67,7 +64,6 @@ public class Space extends World
             
             if (!gameOver) {
             updateGameTimer();
-            // ... existing code ...
             } else {
                 gameOver = true;
                 if (gameOver){
@@ -180,7 +176,6 @@ public class Space extends World
         } else {
             // The game timer has reached 0, end the game
             gameOver = true;
-            // Additional game over logic can be added here
         }
     }
     
