@@ -29,6 +29,7 @@ public class Rocket extends Mover
     private GreenfootImage currentImageWithThrust;
     private boolean hasSpecialEffect = false;
     private Laser laser = null;
+    private boolean hasShield = false;
 
     
 
@@ -95,12 +96,12 @@ public class Rocket extends Mover
      */
     private void checkKeys() 
     {
-        ignite(Greenfoot.isKeyDown("up"));
+        ignite(Greenfoot.isKeyDown("w"));
         
-        if(Greenfoot.isKeyDown("left")) {
+        if(Greenfoot.isKeyDown("a")) {
             turn(-5);
         }        
-        if(Greenfoot.isKeyDown("right")) {
+        if(Greenfoot.isKeyDown("d")) {
             turn(5);
         }      
     }
@@ -148,11 +149,23 @@ public class Rocket extends Mover
                 currentImageWithThrust = (rocketWithThrustPflug);
                 currentImageNoThrust = (rocketWithPflug);
                 hasSpecialEffect = true;
-            
+                checkCollisionWithEnemy();
                 break;
         }
     }
     
+    private void checkCollisionWithEnemy()
+    {
+        List<Rocket2> enemyList = getObjectsAtOffset(0, 0, Rocket2.class);
+        
+        if (!enemyList.isEmpty()) {
+            Rocket2 enemy = enemyList.get(0);
+            getWorld().removeObject(enemy);
+        }
+    }
+}
+
+
     /**
     public void attachLaser(){
         laser = new Laser();
@@ -171,4 +184,4 @@ public class Rocket extends Mover
     
    
     
-}
+

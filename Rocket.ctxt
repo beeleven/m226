@@ -15,4 +15,6 @@ comment4.target=void\ ignite(boolean)
 comment4.text=\r\n\ Soll\ die\ Rakete\ gez\u00FCndet\ werden?\r\n
 comment5.params=effect
 comment5.target=void\ applyEffect(int)
-numComments=6
+comment6.params=
+comment6.target=void\ checkCollisionWithEnemy()
+numComments=7

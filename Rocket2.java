@@ -83,12 +83,12 @@ public class Rocket2 extends Mover
      */
     private void checkKeys() 
     {
-        ignite(Greenfoot.isKeyDown("w"));
+        ignite(Greenfoot.isKeyDown("up"));
         
-        if(Greenfoot.isKeyDown("a")) {
+        if(Greenfoot.isKeyDown("left")) {
             turn(-5);
         }        
-        if(Greenfoot.isKeyDown("d")) {
+        if(Greenfoot.isKeyDown("right")) {
             turn(5);
         }      
     }
@@ -120,5 +120,6 @@ public class Rocket2 extends Mover
                 break;
         }
     }
+    
 
 }
