@@ -49,14 +49,14 @@ public class Rocket extends Mover
         
         move();
         checkKeys();
-        checkCollisionRange();
-        moveLaser();
+        //checkCollisionRange();
+        //moveLaser();
     }
 
     
     /**
      * Prüft, ob wir mit einem Asteroiden kollidieren.
-     */
+     
     private void checkCollision() 
     {
         Asteroid a = (Asteroid) getOneIntersectingObject(Asteroid.class);
@@ -66,9 +66,7 @@ public class Rocket extends Mover
         }
     }
     
-    /**
-     * Prüft, ob wir mit einem Asteroiden innerhlab des Bereichs kollidieren.
-     */
+    
     private void checkCollisionRange() 
     {   
         int range = getImage().getWidth(); //Set radius of the Range
@@ -81,6 +79,8 @@ public class Rocket extends Mover
             }
         }
     }
+    **/
+    
     
     /**
      * Prüft, ob irgendeine Taste gedrückt wurde, und reagiert darauf.
@@ -125,17 +125,18 @@ public class Rocket extends Mover
     public void applyEffect(int effect){
         switch (effect) {
             case 1:
-                setImage(rocketWithThrustLaser);
+                setImage(rocketWithThrust);
                 hasSpecialEffect = false;
                 break;
                 
-            //case 2:
-             //   setImage("rocketTwo.png");
-             //   hasSpecialEffect = true;
-             //   break;
+            case 2:
+                setImage(rocketWithThrustLaser);
+                hasSpecialEffect = true;
+                break;
         }
     }
     
+    /**
     public void attachLaser(){
         laser = new Laser();
         getWorld().addObject(laser, getX(), getY());
@@ -149,4 +150,5 @@ public class Rocket extends Mover
             laser.setRotation(getRotation());
         }
     }
+    **/
 }
