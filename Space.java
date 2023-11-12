@@ -16,6 +16,8 @@ public class Space extends World
     // Add a variable for countdown time
     private int countdown = 300;  // 300 frames, assuming 60 frames per second
     private boolean countdownActive = true;  // Indicates whether the countdown is active
+    private int player1Score = 0;
+    private int player2Score = 0;
     
     
     /**
@@ -30,6 +32,7 @@ public class Space extends World
         createStars(300);
         Explosion.initialiseImages();
         createRockets();
+        updateScore();
     }
     
     public void act(){
@@ -42,6 +45,7 @@ public class Space extends World
                 // Additional setup or game logic after countdown
                 showText("", getWidth() / 2, getHeight() / 2);
                 spawnItemInCenter();
+                checkScore();
             }
         } else {
             // Game logic when the countdown is done
@@ -91,4 +95,25 @@ public class Space extends World
         Item item = new Item();
         addObject(item, getWidth() / 2, yOffset);
     }
+    
+    public void checkScore () {
+        List<Rocket> player1List = getObjects(Rocket.class);
+        List<Rocket2> player2List = getObjects(Rocket2.class);
+        
+    if (player1List.size() == 1) {
+        player1Score++;
+        updateScore();
+    }
+
+    if (player2List.size() == 1) {
+        player2Score++;
+        updateScore();
+    }
+}
+        
+    private void updateScore() {
+        showText("Player 1 Score: " + player1Score, 100, 20);
+        showText("Player 2 Score: " + player2Score, getWidth() - 100, 20);
+    }
+
 }
