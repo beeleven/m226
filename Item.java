@@ -10,8 +10,11 @@ import java.util.*;
 public class Item extends Actor
 {
     
-    private GreenfootImage item = new GreenfootImage("button-purple.png");
+    int newWidth = 50;
+    int newHeight = 50;
+    private GreenfootImage itemRaw = new GreenfootImage("button-purple.png");
     private Random random = new Random();
+    int randomEffect = random.nextInt(4);
     
     /**
      * Initialisiert das Item
@@ -26,10 +29,15 @@ public class Item extends Actor
         checkCollision();
     }
     
+    private int generateRandomNumber(){
+        int number = random.nextInt(4);
+        return number;
+    }
+     
     public void checkCollision() {
         if (isTouching(Rocket.class) || isTouching(Rocket2.class)){
-            int randomEffect = random.nextInt(2) + 1;
-            //int randomEffect = 2;
+            
+            randomEffect = generateRandomNumber();
             
             applyEffectToRocket(randomEffect);
             
