@@ -15,7 +15,4 @@ comment4.target=void\ ignite(boolean)
 comment4.text=\r\n\ Soll\ die\ Rakete\ gez\u00FCndet\ werden?\r\n
 comment5.params=effect
 comment5.target=void\ applyEffect(int)
-comment6.params=
-comment6.target=void\ checkCollisionWithEnemyRocket()
-comment6.text=\r\n\ \ \ \ public\ void\ attachLaser(){\r\n\ \ \ \ \ \ \ \ laser\ \=\ new\ Laser();\r\n\ \ \ \ \ \ \ \ getWorld().addObject(laser,\ getX(),\ getY());\r\n\ \ \ \ \ \ \ \ laser.setRotation(getRotation());\r\n\ \ \ \ \ \ \ \ \r\n\ \ \ \ }\r\n\ \ \ \ \r\n\ \ \ \ private\ void\ moveLaser()\ {\r\n\ \ \ \ \ \ \ \ if\ (laser\ \!\=\ null)\ {\r\n\ \ \ \ \ \ \ \ \ \ \ \ laser.setLocation(getX(),\ getY());\r\n\ \ \ \ \ \ \ \ \ \ \ \ laser.setRotation(getRotation());\r\n\ \ \ \ \ \ \ \ }\r\n\ \ \ \ }\r\n
-numComments=7
+numComments=6
