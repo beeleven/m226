@@ -31,7 +31,9 @@ public class Rocket extends Mover
     private GreenfootImage currentImageWithThrust;
     private boolean hasSpecialEffect = false;
     private Laser laser = null;
-    private boolean hasShield = false;
+    private boolean shieldActive = false;
+    private int effectTimer = 0;
+    private static final int EFFECT_DURATION = 2 * 60;  // 7 seconds at 60 frames per second
 
     
 
@@ -45,6 +47,7 @@ public class Rocket extends Mover
         increaseSpeed(new Vector(getRotation(), 0.3));
 
     }
+    
 
     /**
      * Tut, was eien Rakete so macht. (Das heißt: meistens herumfliegen und wenden,
@@ -63,38 +66,18 @@ public class Rocket extends Mover
         if (currentImageWithThrust == rocketWithThrustPflug || currentImageNoThrust == rocketWithPflug) {
             checkCollisionWithEnemy();
         }
-        //checkCollisionRange();
-        //moveLaser();
-    }
-
-    
-    /**
-     * Prüft, ob wir mit einem Asteroiden kollidieren.
-     
-    private void checkCollision() 
-    {
-        Asteroid a = (Asteroid) getOneIntersectingObject(Asteroid.class);
-        if (a != null) {
-            getWorld().addObject(new Explosion(), getX(), getY());
-            getWorld().removeObject(this);
-        }
-    }
-    
-    
-    private void checkCollisionRange() 
-    {   
-        int range = getImage().getWidth(); //Set radius of the Range
         
-        List<Asteroid> asteroids = getObjectsInRange(range, Asteroid.class);
-        for (Asteroid a : asteroids) {
-            if (a != null) {
-                getWorld().addObject(new Explosion(), getX(), getY());
-                getWorld().removeObject(this);
+        if (effectTimer > 0) {
+            effectTimer--;
+            if (effectTimer == 0) {
+                // Effect duration expired, reset the effect
+                resetSpecialEffect();
             }
         }
-    }
-    **/
+        
     
+    }
+
     
     /**
      * Prüft, ob irgendeine Taste gedrückt wurde, und reagiert darauf.
@@ -146,12 +129,15 @@ public class Rocket extends Mover
                 currentImageWithThrust = (rocketWithThrustLaser);
                 currentImageNoThrust = (rocketWithLaser);
                 hasSpecialEffect = true;
+                effectTimer = EFFECT_DURATION;
+                createLaser();
                 break;
                 
             case 2:
                 currentImageWithThrust = (rocketWithThrustPflug);
                 currentImageNoThrust = (rocketWithPflug);
                 hasSpecialEffect = true;
+                effectTimer = EFFECT_DURATION;
                 checkCollisionWithEnemy();
                 break;
                 
@@ -159,7 +145,16 @@ public class Rocket extends Mover
                 currentImageWithThrust = (rocketWithThrustShield);
                 currentImageNoThrust = (rocketWithShield);
                 hasSpecialEffect = true;
-                hasShield = true;
+                effectTimer = EFFECT_DURATION;
+                shieldActive = true;
+                break;
+                
+            case 4:
+                currentImageWithThrust = (rocketWithThrustShield);
+                currentImageNoThrust = (rocketWithShield);
+                hasSpecialEffect = true;
+                effectTimer = EFFECT_DURATION;
+                spawnAsteroids();
                 break;
         }
     }
@@ -180,6 +175,40 @@ public class Rocket extends Mover
         
         
     }
+    
+    private boolean hasShield(){
+        return shieldActive;
+    }
+    
+    private void resetSpecialEffect() {
+        hasSpecialEffect = false;
+        shieldActive = false;
+        currentImageNoThrust = rocket;
+        currentImageWithThrust = rocketWithThrust;
+        laser = null;
+    }
+    
+    private void spawnAsteroids() {
+    // Add code here to spawn asteroids when case 4 is activated
+    // You can customize the size, speed, and position of the asteroids
+    // Example:
+    for (int i = 0; i < 3; i++) {
+        int size = Greenfoot.getRandomNumber(64) + 32; // Random size between 32 and 95
+        Vector speed = new Vector(Greenfoot.getRandomNumber(360), 2);
+        Asteroid asteroid = new Asteroid();
+        getWorld().addObject(asteroid, Greenfoot.getRandomNumber(getWorld().getWidth()), Greenfoot.getRandomNumber(getWorld().getHeight()));
+    }
+}
+
+private void createLaser() {
+        // Create a new Laser instance in front of the rocket
+        double x = getX() + Math.cos(Math.toRadians(getRotation())) * getImage().getWidth() / 2;
+        double y = getY() + Math.sin(Math.toRadians(getRotation())) * getImage().getHeight() / 2;
+        laser = new Laser();
+        getWorld().addObject(laser, (int) x, (int) y);
+        laser.setRotation(getRotation());
+    }
+
 }
     
 

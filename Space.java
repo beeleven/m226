@@ -18,6 +18,11 @@ public class Space extends World
     private boolean countdownActive = true;  // Indicates whether the countdown is active
     private int player1Score = 0;
     private int player2Score = 0;
+    public boolean respawnShield = true;
+    private int itemSpawnTimer = 0;
+    private static final int ITEM_SPAWN_INTERVAL = 7 * 60;  // 7 seconds at 60 frames per second
+    private double gameTimer = 20.5 * 60; // 60 seconds * 60 frames per second
+    private boolean gameOver = false;
     
     
     /**
@@ -51,6 +56,24 @@ public class Space extends World
             checkScore();
             // Game logic when the countdown is done
             // Other game logic...
+            
+             itemSpawnTimer++;
+            if (itemSpawnTimer >= ITEM_SPAWN_INTERVAL) {
+                // Reset the timer
+                itemSpawnTimer = 0;
+                // Spawn the item
+                spawnItemInRandomPosition();
+            }
+            
+            if (!gameOver) {
+            updateGameTimer();
+            // ... existing code ...
+            } else {
+                gameOver = true;
+                if (gameOver){
+                    Greenfoot.stop();
+                }
+            }   
         }
     }
     
@@ -99,22 +122,35 @@ public class Space extends World
         List<Rocket> player1List = getObjects(Rocket.class);
         List<Rocket2> player2List = getObjects(Rocket2.class);
         
-    if (player1List.size() == 0) {
-        player2Score++;
-        Rocket player1Rocket = new Rocket ();
-        addObject(player1Rocket, 20, getHeight() / 2);
-        updateScore();
+        if (player1List.size() == 0) {
+            player2Score++;
+            respawnRocket1();
+            updateScore();
+        }
+    
+        if (player2List.size() == 0) {
+            player1Score++;
+            respawnRocket2();
+            updateScore();
+        }
+    
+    
     }
 
-    if (player2List.size() == 0) {
-        player1Score++;
-        Rocket2 player2Rocket = new Rocket2();
-        addObject(player2Rocket, 800 - 20, getHeight() / 2);
-        updateScore();
+    public boolean respawnRocket1(){
+        Rocket player1Rocket = new Rocket();
+        addObject(player1Rocket, 20, getHeight() / 2);
+        respawnShield = true;
+        return respawnShield;
     }
     
-    
-}
+    public boolean respawnRocket2(){
+        Rocket2 player2Rocket = new Rocket2();
+        addObject(player2Rocket, 800 - 20, getHeight() / 2);
+        respawnShield = true;
+        return respawnShield;
+    }
+
 
     private void updateScore() {
         showText("Player 1 Score: " + player1Score, 100, 20);
@@ -135,5 +171,20 @@ public class Space extends World
         int x = Greenfoot.getRandomNumber(getWidth());
         int y = Greenfoot.getRandomNumber(getHeight());
         addObject(item, x, y);
+    }
+    
+    private void updateGameTimer() {
+        if (gameTimer > 0) {
+            gameTimer--;
+            showGameTimer();
+        } else {
+            // The game timer has reached 0, end the game
+            gameOver = true;
+            // Additional game over logic can be added here
+        }
+    }
+    
+    private void showGameTimer() {
+        showText("Time: " + (gameTimer) + " seconds", getWidth() / 2, 20);
     }
 }

@@ -15,6 +15,8 @@ public class Asteroid extends Mover
 
     /** Wenn die Stabilität 0 erreicht ist, explodiert der Asteroid */
     private int stability;
+    private int lifeTimer = 0;
+    private static int LIFE_DURATION = 4 * 60;
 
     /**
      * Erzeugt einen Asteroiden mit einer Standardgröße und -geschwindigkeit.
@@ -46,9 +48,35 @@ public class Asteroid extends Mover
      */
     public void act()
     {         
-        move();
+        checkCollisionWithRocket();
+        updateLifeTimer();
+    }
+    private void checkCollisionWithRocket() {
+    if (isTouching(Rocket.class) || isTouching(Rocket2.class)) {
+        Rocket rocket = (Rocket) getOneIntersectingObject(Rocket.class);
+        Rocket2 rocket2 = (Rocket2) getOneIntersectingObject(Rocket2.class);
+
+        if (rocket != null) {
+            destroyRocket(rocket);
+        } else if (rocket2 != null) {
+            destroyRocket2(rocket2);
+        }
+
+        breakUp(); // Destroy the asteroid
+    }
+    }
+    
+    private void destroyRocket(Rocket rocket) {
+    getWorld().addObject(new Explosion(), rocket.getX(), rocket.getY());
+    getWorld().removeObject(rocket);
     }
 
+    private void destroyRocket2(Rocket2 rocket2) {
+        getWorld().addObject(new Explosion(), rocket2.getX(), rocket2.getY());
+        getWorld().removeObject(rocket2);
+    }
+    
+    
     /**
      * Setzt die Größe dieses Asteroiden. Beachte, dass die Stabilität im direkten
      * Zusammenhang mit der Größe steht. Kleinere Asteroide sind weniger stabil.
@@ -73,13 +101,19 @@ public class Asteroid extends Mover
     /**
      * Trifft diesen Asteroiden und richtet den angegebenen Schaden an.
      */
-    public void hit(int damage) 
-    {
-        stability = stability - damage;
-        if (stability <= 0) {
-            breakUp();       
-        }
+    public void hit(int damage) {
+    stability = stability - damage;
+    if (stability <= 0) {
+        destroyRocket();
+        breakUp(); // Destroy the rocket
     }
+    }   
+
+    private void destroyRocket() {
+        getWorld().addObject(new Explosion(), getX(), getY());
+        getWorld().removeObject(this);
+    }
+
     
     /**
      * Zerbricht diesen Asteroiden in zwei kleinere Asteroide (oder falls er schon  
@@ -107,6 +141,13 @@ public class Asteroid extends Mover
             a1.move();
             a2.move();
         
+            getWorld().removeObject(this);
+        }
+    }
+    
+    public void updateLifeTimer(){
+        lifeTimer++;
+        if(lifeTimer >= LIFE_DURATION){
             getWorld().removeObject(this);
         }
     }

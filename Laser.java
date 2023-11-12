@@ -10,6 +10,8 @@ public class Laser extends Mover
 {
     private static final int LENGTH = 80; // Adjust the length of the laser as needed
     private static final int DISTANCE_FROM_ROCKET = 60; // Adjust the distance from the rocket
+    private int lifeTimer = 0;
+    private static final int LIFE_DURATION = 2 * 60;  // 7 seconds at 60 frames per second
 
 
 
@@ -29,6 +31,7 @@ public class Laser extends Mover
         positionRelativeToRocket();
         move(5); // Adjust the speed as needed
         checkCollision();
+        updateLifeTimer();
     }
 
     private void checkCollision() {
@@ -47,5 +50,13 @@ public class Laser extends Mover
         int offsetY = (int) (Math.sin(angle) * DISTANCE_FROM_ROCKET);
         setLocation(rocket.getX() + offsetX, rocket.getY() + offsetY);
         setRotation(rocket.getRotation());
+    }
+    
+     private void updateLifeTimer() {
+        lifeTimer++;
+        if (lifeTimer >= LIFE_DURATION) {
+            // Life duration expired, remove the laser
+            getWorld().removeObject(this);
+        }
     }
 }
