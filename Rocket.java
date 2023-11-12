@@ -41,6 +41,12 @@ public class Rocket extends Mover
      */
     public void act()
     {
+        // Check if the countdown is still active in the Space class
+        if (((Space) getWorld()).isCountdownActive()) {
+            // If countdown is active, don't process rocket control
+            return;
+        }
+        
         move();
         checkKeys();
         checkCollisionRange();
