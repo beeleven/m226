@@ -75,11 +75,8 @@ public class Space extends World
         addObject(player1Rocket, 20, getHeight() / 2);
         
         Rocket2 player2Rocket = new Rocket2();
-<<<<<<< HEAD
-        //addObject(player2Rocket, 800 - 20, getHeight() / 2);
-=======
         addObject(player2Rocket, 800 - 20, getHeight() / 2);
->>>>>>> 78a23be561f51b0083a7b0a2fda278b1dc57f9d3
+
         
     }
     

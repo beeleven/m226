@@ -148,7 +148,7 @@ public class Rocket extends Mover
                 currentImageWithThrust = (rocketWithThrustPflug);
                 currentImageNoThrust = (rocketWithPflug);
                 hasSpecialEffect = true;
-                checkCollisionWithEnemyRocket();
+            
                 break;
         }
     }
@@ -169,10 +169,6 @@ public class Rocket extends Mover
     }
     **/
     
-    private void checkCollisionWithEnemyRocket(){
-        Rocket2 rocket= (Rocket2) getOneIntersectingObject(Rocket2.class);
-        if (rocket != null){
-            getWorld().removeObject(rocket);
-        }
-    }
+   
+    
 }
