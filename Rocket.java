@@ -23,6 +23,8 @@ public class Rocket extends Mover
     private GreenfootImage rocketWithLaser = new GreenfootImage("rocketWithLaser.png");
     private GreenfootImage rocketWithThrustPflug = new GreenfootImage("rocketWithThrustPflug.png");
     private GreenfootImage rocketWithPflug = new GreenfootImage("rocketWithPflug.png");
+    private GreenfootImage rocketWithShield = new GreenfootImage("rocketWithShield.png");
+    private GreenfootImage rocketWithThrustShield = new GreenfootImage("rocketWithThrustShield.png");
     
     
     private GreenfootImage currentImageNoThrust = rocket;
@@ -125,16 +127,14 @@ public class Rocket extends Mover
             
         }
         else{
-            setImage(currentImageNoThrust); 
+            if(hasSpecialEffect){
+                setImage(currentImageNoThrust); 
+            }
+            else{
+                setImage(rocket);
+            }
+            
         }
-        
-        /**
-        else if(!hasSpecialEffect) {
-            setImage(rocket);
-        }
-        
-        **/
-
     }
     
     public void applyEffect(int effect){
@@ -150,6 +150,13 @@ public class Rocket extends Mover
                 currentImageNoThrust = (rocketWithPflug);
                 hasSpecialEffect = true;
                 checkCollisionWithEnemy();
+                break;
+                
+            case 3:
+                currentImageWithThrust = (rocketWithThrustShield);
+                currentImageNoThrust = (rocketWithShield);
+                hasSpecialEffect = true;
+                hasShield = true;
                 break;
         }
     }
