@@ -123,7 +123,6 @@ public class Rocket2 extends Mover
     }
     
     public boolean hasShield(){
-        hasShield = true;
         return hasShield;
     }
     

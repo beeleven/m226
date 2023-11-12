@@ -170,14 +170,15 @@ public class Rocket extends Mover
         Rocket2 enemyRocket = (Rocket2) getOneIntersectingObject(Rocket2.class);
         
         if(enemyRocket != null){
-            if(enemyRocket.hasShield()){
+            if (enemyRocket.hasShield()){
                 return;
+            }
+            else {
+            getWorld().removeObject(enemyRocket);
             }
         }
         
-        else {
-            getWorld().removeObject(enemyRocket);
-        }
+        
     }
 }
     
