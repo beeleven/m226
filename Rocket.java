@@ -25,7 +25,7 @@ public class Rocket extends Mover
     private GreenfootImage rocketWithPflug = new GreenfootImage("rocketWithPflug.png");
     
     
-    private GreenfootImage currentImageNoThrust;
+    private GreenfootImage currentImageNoThrust = rocket;
     private GreenfootImage currentImageWithThrust;
     private boolean hasSpecialEffect = false;
     private Laser laser = null;
@@ -113,10 +113,26 @@ public class Rocket extends Mover
     {        
         
         if (boosterOn) {
+            setImage(rocketWithThrust);
+            
             acceleration.setDirection(getRotation());
             increaseSpeed(acceleration);
+            
+            if(hasSpecialEffect){
+                setImage(currentImageWithThrust);
+            }
+            
+        }
+        else{
+            setImage(currentImageNoThrust); 
         }
         
+        /**
+        else if(!hasSpecialEffect) {
+            setImage(rocket);
+        }
+        
+        **/
 
     }
     
