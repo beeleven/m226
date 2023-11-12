@@ -132,6 +132,7 @@ public class Rocket extends Mover
             case 2:
                 setImage(rocketWithThrustLaser);
                 hasSpecialEffect = true;
+                checkCollisionWithEnemyRocket();
                 break;
         }
     }
@@ -151,4 +152,11 @@ public class Rocket extends Mover
         }
     }
     **/
+    
+    private void checkCollisionWithEnemyRocket(){
+        Rocket2 rocket= (Rocket2) getOneIntersectingObject(Rocket2.class);
+        if (rocket != null){
+            getWorld().removeObject(rocket);
+        }
+    }
 }

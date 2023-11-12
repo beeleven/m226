@@ -65,7 +65,7 @@ public class Space extends World
         }
     }
     
-    private void createRockets(){        
+    public void createRockets(){        
         Rocket player1Rocket = new Rocket();
         addObject(player1Rocket, 20, getHeight() / 2);
         
