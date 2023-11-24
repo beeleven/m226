@@ -14,7 +14,7 @@ public class Item extends Actor
     int newHeight = 50;
     private GreenfootImage itemRaw = new GreenfootImage("button-purple.png");
     private Random random = new Random();
-    int randomEffect = random.nextInt(4);
+    int randomEffect;
     
     /**
      * Initialisiert das Item
@@ -29,10 +29,14 @@ public class Item extends Actor
         checkCollision();
     }
     
-    private int generateRandomNumber(){
-        int number = random.nextInt(4);
+    private int generateRandomNumber() {
+        int number;
+        do {
+            number = random.nextInt(5);
+        } while (number == 0);
         return number;
     }
+
      
     public void checkCollision() {
         if (isTouching(Rocket.class) || isTouching(Rocket2.class)){

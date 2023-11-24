@@ -34,6 +34,8 @@ public class Rocket2 extends Mover
     private boolean shieldActive = false;
     private int effectTimer = 0;
     private static final int EFFECT_DURATION = 2 * 60;  // 7 seconds at 60 frames per second
+    private boolean hasAsteroids = false;
+
     /**
      * Initialisiert diese Rakete.
      * KEL 
@@ -180,9 +182,39 @@ public class Rocket2 extends Mover
             
             
         }
+        
+       private void checkCollisionWithAsteorid()
+    {
+        Asteroid asteroid = (Asteroid) getOneIntersectingObject(Asteroid.class);
+        
+        if(asteroid != null){
+            if (this.hasShield()){
+                return;
+            }
+            else {
+            getWorld().removeObject(this);
+            }
+        }
+        
+        
+    }
     
-    public boolean hasShield(){
-        return shieldActive;
+    private void checkAsteroids(){
+        List<Asteroid> asteroidList = getWorld().getObjects(Asteroid.class);
+        
+        if (asteroidList.size() == 0) {
+           hasAsteroids = true;
+        }else{
+            hasAsteroids = false;
+        }
+    }
+    
+   public boolean hasShield(){
+        if(shieldActive = true){
+        return true;
+        }else{
+            return false;
+        }
     }
     
      private void spawnAsteroids() {
